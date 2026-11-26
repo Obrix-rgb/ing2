@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Yüreğir Halıcılar AHL · Presentation</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/fraunces@5.1.0/index.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/fraunces@5.1.0/wght-italic.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/archivo@5.1.0/index.css">
+<style>
+  :root{
+    --paper:#F4EEE4; --ink:#16130F; --oxide:#B5472B; --forest:#14382F;
+    --mustard:#D9A227; --line:rgba(22,19,15,.16); --soft:rgba(22,19,15,.55);
+    --bar:#1B1815; --barline:#2C2723; --barfg:#B9AE9F;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+  html,body{margin:0;height:100%}
+  body{background:var(--bar);font-family:'Archivo Variable',Archivo,'Segoe UI',Arial,sans-serif;
+    color:var(--ink);overflow:hidden;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+
+  /* ---------- sahne ---------- */
+  .stage{position:fixed;left:0;right:0;top:0;bottom:64px;display:flex;align-items:center;
+    justify-content:center;overflow:hidden}
+  .box{position:relative;flex:none;overflow:hidden;
+    box-shadow:0 26px 70px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.06)}
+  .deck{position:absolute;left:0;top:0;width:1280px;height:720px;transform-origin:top left;
+    background:var(--paper)}
+
+  .slide{position:absolute;inset:0;padding:54px 64px 58px;background:var(--paper);
+    opacity:0;visibility:hidden;transform:translateY(16px);
+    transition:opacity .4s ease,transform .4s ease,visibility .4s}
+  .slide.on{opacity:1;visibility:visible;transform:none;z-index:2}
+  .slide::before{content:'';position:absolute;inset:20px;border:1px solid var(--line);pointer-events:none}
+  .slide.dark{background:var(--forest);color:#EFE8DB}
+  .slide.dark::before{border-color:rgba(239,232,219,.22)}
+
+  .slabel{display:flex;align-items:center;gap:11px;font-size:10.5px;letter-spacing:2.7px;
+    text-transform:uppercase;font-weight:700;color:var(--oxide)}
+  .slabel i{width:22px;height:1px;background:var(--oxide);display:block}
+  .dark .slabel{color:#E8B9A5}
+  .dark .slabel i{background:#E8B9A5}
+
+  h2.h{font-family:'Fraunces Variable',Georgia,serif;font-weight:600;font-size:50px;line-height:1.02;
+    letter-spacing:-1px;margin:20px 0 0;color:var(--ink)}
+  h2.h em{font-style:italic;color:var(--oxide);font-weight:500}
+  .dark h2.h{color:#F3EDE1}
+  .sub{font-family:'Fraunces Variable',Georgia,serif;font-style:italic;font-size:17px;
+    color:var(--soft);margin:12px 0 0}
+  .dark .sub{color:rgba(243,237,225,.62)}
+
+  .pg{position:absolute;right:64px;bottom:28px;font-family:'Fraunces Variable',Georgia,serif;
+    font-size:14px;letter-spacing:1.2px;color:rgba(22,19,15,.42)}
+  .pg b{color:var(--oxide);font-weight:600}
+  .dark .pg{color:rgba(243,237,225,.5)}
+  .dark .pg b{color:#E8B9A5}
+  .src{position:absolute;left:64px;bottom:28px;font-size:10px;letter-spacing:1.4px;
+    text-transform:uppercase;color:rgba(22,19,15,.38);font-weight:600}
+  .dark .src{color:rgba(243,237,225,.4)}
+
+  /* ---------- 1 ---------- */
+  .cover{padding:0}
+  .cover .grid{position:absolute;left:64px;top:78px;width:700px}
+  .cover .stamp{display:flex;align-items:flex-start;gap:14px}
+  .cover .stamp .sq{width:13px;height:13px;background:var(--oxide);flex:none;margin-top:3px}
+  .cover .stamp .mt{font-size:10px;letter-spacing:2.2px;text-transform:uppercase;
+    color:rgba(239,232,219,.72);line-height:1.75;font-weight:600}
+  .cover .stamp .mt b{display:block;color:#fff;letter-spacing:2.6px;font-size:11px}
+  .cover h1{font-family:'Fraunces Variable',Georgia,serif;font-weight:600;font-size:76px;
+    line-height:.99;letter-spacing:-2.2px;margin:46px 0 0;color:#F6F0E4}
+  .cover h1 em{font-style:italic;font-weight:500;color:#E8B9A5}
+  .cover .rl{width:74px;height:2px;background:var(--oxide);margin:34px 0 0}
+  .cover .sn{font-size:13px;letter-spacing:4px;text-transform:uppercase;color:#F6F0E4;
+    font-weight:700;margin-top:20px}
+  .cover .sn2{font-size:10px;letter-spacing:2.6px;text-transform:uppercase;
+    color:rgba(239,232,219,.55);margin-top:9px;font-weight:600}
+  .cover .yr{position:absolute;right:64px;top:74px;text-align:right}
+  .cover .yr .a{font-family:'Fraunces Variable',Georgia,serif;font-size:19px;color:#EFE8DB;letter-spacing:1px}
+  .cover .yr .b{font-size:9.5px;letter-spacing:2.6px;text-transform:uppercase;
+    color:rgba(239,232,219,.5);margin-top:7px;font-weight:600}
+  .cover .art{position:absolute;right:-40px;bottom:-30px;width:430px;height:430px}
+  .cover .art svg{width:100%;height:100%}
+  .cover .hint{position:absolute;left:64px;bottom:30px;font-size:9.5px;letter-spacing:1.6px;
+    text-transform:uppercase;color:rgba(239,232,219,.34);font-weight:600}
+
+  /* ---------- 2 ---------- */
+  .n4{display:grid;grid-template-columns:repeat(4,1fr);margin-top:52px;border-top:2px solid var(--ink)}
+  .n4 .it{padding:26px 24px 0 0;border-right:1px solid var(--line)}
+  .n4 .it:last-child{border-right:0}
+  .n4 .v{font-family:'Fraunces Variable',Georgia,serif;font-weight:600;font-size:104px;
+    line-height:.84;letter-spacing:-4px;display:block}
+  .n4 .l{display:block;margin-top:20px;font-size:10.5px;letter-spacing:2.1px;
+    text-transform:uppercase;font-weight:700;color:var(--soft)}
+  .n4 .n{display:block;font-size:12.5px;line-height:1.5;color:#4A423A;margin-top:9px}
+  .footq{margin-top:46px;padding-top:18px;border-top:1px solid var(--line);
+    display:flex;align-items:baseline;gap:16px}
+  .footq b{font-family:'Fraunces Variable',Georgia,serif;font-size:21px;font-weight:600}
+  .footq span{font-size:11.5px;letter-spacing:1.3px;text-transform:uppercase;color:var(--soft);font-weight:700}
+
+  /* ---------- 3 ---------- */
+  .vm{display:grid;grid-template-columns:1fr 1fr;gap:56px;margin-top:40px}
+  .vm .lbl{font-size:10.5px;letter-spacing:2.5px;text-transform:uppercase;font-weight:700;color:var(--oxide)}
+  .vm h3{font-family:'Fraunces Variable',Georgia,serif;font-size:26px;font-weight:600;line-height:1.15;
+    margin:10px 0 0;letter-spacing:-.4px}
+  .vm p{font-family:'Fraunces Variable',Georgia,serif;font-size:16.5px;line-height:1.64;
+    color:#2A241E;margin:14px 0 0}
+  .vm p::first-letter{font-family:'Fraunces Variable',Georgia,serif;font-size:44px;line-height:.78;
+    float:left;padding:7px 9px 0 0;color:var(--oxide);font-weight:600}
+  .qband{position:absolute;left:64px;right:64px;bottom:72px;border-top:1px solid var(--line);
+    padding-top:18px;display:flex;align-items:center;gap:18px}
+  .qband q{font-family:'Fraunces Variable',Georgia,serif;font-style:italic;font-size:22px;
+    color:var(--oxide);quotes:none}
+  .qband span{margin-left:auto;font-size:10px;letter-spacing:2px;text-transform:uppercase;
+    color:var(--soft);font-weight:700}
+
+  /* ---------- 4 ---------- */
+  .inv{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:34px}
+  .boxx{border:1px solid rgba(22,19,15,.24);padding:16px 15px;min-height:106px;
+    display:flex;flex-direction:column;justify-content:space-between;background:rgba(255,255,255,.34)}
+  .boxx .v{font-family:'Fraunces Variable',Georgia,serif;font-size:33px;font-weight:600;line-height:1}
+  .boxx .l{font-size:11px;line-height:1.4;color:rgba(22,19,15,.64);margin-top:10px;letter-spacing:.2px}
+  .boxx.hi{background:var(--oxide);border-color:var(--oxide);color:#F7F0E4}
+  .boxx.hi .l{color:rgba(255,255,255,.82)}
+  .boxx.gr{background:var(--forest);border-color:var(--forest);color:#EFE8DB}
+  .boxx.gr .l{color:rgba(239,232,219,.75)}
+  .invnote{margin-top:20px;display:flex;gap:14px;align-items:flex-start;font-size:11.5px;
+    line-height:1.5;color:var(--soft);max-width:780px}
+  .invnote i{display:block;width:9px;height:9px;background:var(--oxide);margin-top:4px;flex:none}
+
+  /* ---------- 5 ---------- */
+  .day{margin-top:44px;display:flex;align-items:flex-end;gap:48px}
+  .day .t{font-family:'Fraunces Variable',Georgia,serif;font-weight:600;font-size:80px;
+    line-height:.88;letter-spacing:-3px}
+  .day .t small{display:block;font-family:'Archivo Variable',sans-serif;font-size:10px;
+    letter-spacing:2px;text-transform:uppercase;color:var(--soft);margin-top:11px;font-weight:700}
+  .day .dash{font-family:'Fraunces Variable',Georgia,serif;font-size:40px;color:var(--oxide);
+    padding-bottom:26px}
+  .ruler{margin-top:34px;position:relative;height:52px}
+  .ruler .ln{position:absolute;left:0;right:0;top:0;height:1px;background:rgba(22,19,15,.42)}
+  .ruler .tk{position:absolute;left:0;right:0;top:0;height:12px;
+    background:repeating-linear-gradient(90deg,rgba(22,19,15,.45) 0 1px,transparent 1px 4.1666%)}
+  .ruler .lb{position:absolute;top:20px;font-size:10px;letter-spacing:1.6px;
+    text-transform:uppercase;color:var(--soft);font-weight:700}
+  .ruler .lb.l{left:0}.ruler .lb.m{left:50%;transform:translateX(-50%)}.ruler .lb.r{right:0}
+  .three{display:grid;grid-template-columns:repeat(3,1fr);gap:34px;margin-top:48px}
+  .three .c{border-top:2px solid var(--ink);padding-top:16px}
+  .three .k{font-family:'Fraunces Variable',Georgia,serif;font-size:20px;font-weight:600;line-height:1.2}
+  .three p{font-size:13px;line-height:1.6;color:#4A423A;margin:10px 0 0}
+
+  /* ---------- 6 ---------- */
+  .ledger{margin-top:34px;border-top:2px solid var(--ink)}
+  .lrow{display:grid;grid-template-columns:104px 1fr 250px;gap:28px;padding:20px 0;
+    border-bottom:1px solid var(--line);align-items:baseline}
+  .lrow .y{font-family:'Fraunces Variable',Georgia,serif;font-size:24px;font-weight:600;color:var(--oxide)}
+  .lrow h4{font-family:'Fraunces Variable',Georgia,serif;font-size:24px;font-weight:600;
+    line-height:1.15;margin:0;letter-spacing:-.3px}
+  .lrow .d{font-size:13px;line-height:1.55;color:#4A423A;margin:7px 0 0;max-width:640px}
+  .lrow .g{font-size:9.5px;letter-spacing:1.7px;text-transform:uppercase;
+    color:rgba(22,19,15,.46);font-weight:700;text-align:right}
+
+  /* ---------- 7 ---------- */
+  .chart{display:grid;grid-template-columns:1fr 300px;gap:52px;margin-top:30px;align-items:start}
+  .plot svg{display:block;width:100%;height:auto}
+  .plot .axis{font-family:'Archivo Variable',sans-serif;font-size:11px;fill:rgba(22,19,15,.45)}
+  .plot .val{font-family:'Fraunces Variable',Georgia,serif;font-size:15px;font-weight:600;fill:#16130F}
+  .plot .yr{font-family:'Archivo Variable',sans-serif;font-size:11.5px;font-weight:700;fill:rgba(22,19,15,.5)}
+  .tbl{border-top:2px solid var(--ink)}
+  .tbl .r{display:flex;justify-content:space-between;gap:14px;padding:11px 0;
+    border-bottom:1px solid var(--line);font-size:12.5px;color:#3D362F}
+  .tbl .r b{font-family:'Fraunces Variable',Georgia,serif;font-size:16px;font-weight:600;color:var(--ink)}
+  .tbl .lead{font-family:'Fraunces Variable',Georgia,serif;font-size:56px;font-weight:600;
+    line-height:.9;letter-spacing:-2px;margin:0 0 6px}
+  .tbl .cap{font-size:10px;letter-spacing:1.8px;text-transform:uppercase;color:var(--oxide);
+    font-weight:700;margin-bottom:14px}
+  .disc{position:absolute;left:64px;right:64px;bottom:64px;font-size:10px;line-height:1.55;
+    color:rgba(22,19,15,.42);border-top:1px solid var(--line);padding-top:10px}
+
+  /* ---------- 8 ---------- */
+  .end{padding:0}
+  .end .inner{position:absolute;left:64px;top:72px;width:660px}
+  .end h2{font-family:'Fraunces Variable',Georgia,serif;font-weight:600;font-size:62px;
+    line-height:1.0;letter-spacing:-2px;margin:20px 0 0;color:#F6F0E4}
+  .end h2 em{font-style:italic;font-weight:500;color:#E8B9A5}
+  .end .rows{margin-top:34px;border-top:1px solid rgba(239,232,219,.22)}
+  .end .r{display:grid;grid-template-columns:118px 1fr;gap:18px;padding:13px 0;
+    border-bottom:1px solid rgba(239,232,219,.14)}
+  .end .r .k{font-size:9.5px;letter-spacing:2px;text-transform:uppercase;
+    color:rgba(239,232,219,.5);font-weight:700;padding-top:3px}
+  .end .r .v{font-size:14px;line-height:1.5;color:#F0E9DC}
+  .end .r .v small{display:block;font-size:11.5px;color:rgba(239,232,219,.6);margin-top:2px}
+  .end .card{position:absolute;right:64px;top:96px;width:330px;
+    border:1px solid rgba(239,232,219,.28);padding:24px;text-align:center;background:rgba(0,0,0,.14)}
+  .end #qr{display:inline-block;background:#fff;padding:8px;line-height:0}
+  .end #qr img,.end #qr canvas{display:block;width:160px!important;height:160px!important}
+  .end .card .c1{font-size:9.5px;letter-spacing:2px;text-transform:uppercase;
+    color:rgba(239,232,219,.6);font-weight:700;margin-top:16px}
+  .end .card .c2{font-family:'Fraunces Variable',Georgia,serif;font-size:17px;color:#F6F0E4;margin-top:6px}
+  .end .thx{position:absolute;left:64px;bottom:32px;font-family:'Fraunces Variable',Georgia,serif;
+    font-style:italic;font-size:16px;color:rgba(239,232,219,.55)}
+
+  /* ================= ALT ÇUBUK ================= */
+  .tbar{position:fixed;left:0;right:0;bottom:0;height:64px;z-index:60;display:flex;
+    align-items:center;gap:12px;padding:0 14px;background:var(--bar);
+    border-top:1px solid var(--barline);color:var(--barfg)}
+  .grp{display:flex;align-items:center;gap:6px}
+  .nb{width:34px;height:34px;border:1px solid #3C352E;border-radius:3px;background:#241F1B;
+    color:#D8CEC0;font-size:15px;cursor:pointer;display:grid;place-items:center;padding:0}
+  .nb:hover:not(:disabled){background:var(--oxide);border-color:var(--oxide);color:#fff}
+  .nb:disabled{opacity:.28;cursor:default}
+  .cnt{font-family:'Fraunces Variable',Georgia,serif;font-size:13px;letter-spacing:1.2px;
+    color:#8D8375;min-width:52px;text-align:center}
+  .cnt b{color:#F6F0E4;font-size:15px;font-weight:600}
+  .prog{flex:1;height:4px;border-radius:2px;background:#332C26;overflow:hidden;min-width:40px}
+  .prog i{display:block;height:100%;width:12.5%;background:var(--oxide);transition:width .3s}
+  .lng{display:flex;background:#241F1B;border:1px solid #3C352E;border-radius:3px;padding:2px}
+  .lng button{background:none;border:0;color:#8D8375;font:inherit;font-size:10.5px;font-weight:800;
+    letter-spacing:.9px;padding:6px 9px;border-radius:2px;cursor:pointer}
+  .lng button[aria-pressed="true"]{background:#F4EEE4;color:var(--forest)}
+  .tb{font:inherit;font-size:11px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;
+    color:#B9AE9F;background:none;border:1px solid #3C352E;border-radius:3px;padding:0 11px;
+    height:34px;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:6px}
+  .tb:hover{background:#241F1B;color:#F6F0E4}
+  .tb.on{background:var(--oxide);border-color:var(--oxide);color:#fff}
+  .tb .ic{font-size:13px;line-height:1}
+
+  /* ================= PANELLER ================= */
+  .scrim{position:fixed;inset:0;background:rgba(10,8,6,.62);z-index:70;display:none}
+  .scrim.open{display:block}
+  .panel{position:fixed;z-index:80;background:#0F0D0B;border:1px solid #302A24;color:#DDD3C4;
+    box-shadow:0 24px 60px rgba(0,0,0,.7);display:none}
+  .panel.open{display:block}
+
+  #notes{left:0;right:0;bottom:64px;max-height:46vh;overflow:auto;padding:18px 20px;
+    border-left:0;border-right:0;border-bottom:0}
+  #notes .nh{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--oxide);
+    font-weight:800;margin-bottom:9px}
+  #notes .nt{font-size:15px;line-height:1.65;color:#E2D8C9}
+  #notes .nk{margin-top:11px;font-size:11px;color:#7E7365}
+
+  #toc{left:50%;top:50%;transform:translate(-50%,-50%);width:min(560px,92vw);
+    padding:16px;border-radius:6px}
+  #toc .th{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+  #toc .th b{font-family:'Fraunces Variable',Georgia,serif;font-size:15px;letter-spacing:1.2px;
+    color:#F4EEE4}
+  #toc .th button{background:none;border:0;color:#8D8375;font-size:20px;cursor:pointer;line-height:1}
+  #toc ol{list-style:none;margin:0;padding:0;display:grid;gap:3px;max-height:62vh;overflow:auto}
+  #toc li button{width:100%;display:flex;gap:12px;align-items:center;text-align:left;background:none;
+    border:1px solid transparent;border-radius:4px;padding:9px 11px;color:#C9BFAF;font:inherit;
+    font-size:13.5px;cursor:pointer}
+  #toc li button:hover{background:#1A1613;border-color:#302A24;color:#F4EEE4}
+  #toc li button.cur{background:var(--forest);border-color:var(--forest);color:#F4EEE4}
+  #toc li .n{font-family:'Fraunces Variable',Georgia,serif;font-size:12px;color:var(--oxide);
+    min-width:15px}
+  #toc li button.cur .n{color:#E8B9A5}
+
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+  @media (max-width:900px){
+    .tbar{gap:8px;padding:0 9px;height:58px}
+    .stage{bottom:58px}
+    #notes{bottom:58px}
+    .tb{height:32px;padding:0 8px;letter-spacing:.6px;font-size:10px}
+    .tb .lbl{display:none}
+    .cnt{min-width:42px;font-size:12px}
+    .prog{display:none}
+    .nb{width:31px;height:31px}
+  }
+  @media (max-width:560px){
+    .lng button{padding:5px 6px;font-size:10px}
+  }
+
+  /* ---------- yazdırma ---------- */
+  @media print{
+    @page{size:338.7mm 190.5mm;margin:0}
+    html,body{overflow:visible;background:#fff;height:auto}
+    .tbar,.panel,.scrim{display:none!important}
+    .stage{position:static;display:block;padding:0;overflow:visible}
+    .box{width:1280px!important;height:auto!important;box-shadow:none}
+    .deck{position:static;transform:none!important;width:1280px;height:auto}
+    .slide{position:relative;width:1280px;height:720px;opacity:1!important;visibility:visible!important;
+      transform:none!important;break-after:page;page-break-after:always}
+    .slide:last-child{break-after:auto;page-break-after:auto}
+  }
+</style>
+</head>
+<body data-lang="en">
+
+<div class="stage">
+  <div class="box" id="box">
+    <div class="deck" id="deck">
+
+      <!-- ============ 1 · COVER ============ -->
+      <section class="slide cover dark on">
+        <div class="grid">
+          <div class="stamp">
+            <span class="sq"></span>
+            <div class="mt" data-en="Republic of Türkiye · Ministry of National Education<b>Adana · Yüreğir</b>"
+                 data-tr="T.C. Millî Eğitim Bakanlığı<b>Adana · Yüreğir</b>"></div>
+          </div>
+
+          <h1 data-en="Where education<br>turns into <em>love.</em>"
+              data-tr="Eğitimin sevgiye<br>dönüştüğü <em>yer.</em>"></h1>
+
+          <div class="rl"></div>
+          <div class="sn" data-en="Yüreğir Halıcılar Anatolian High School"
+               data-tr="Yüreğir Halıcılar Anadolu Lisesi"></div>
+          <div class="sn2" data-en="Anatolian High School · school profile"
+               data-tr="Anadolu Lisesi · okul profili"></div>
+        </div>
+
+        <div class="yr">
+          <div class="a">2026—2027</div>
+          <div class="b" data-en="Adana · Türkiye" data-tr="Adana · Türkiye"></div>
+        </div>
+
+        <div class="art">
+          <svg viewBox="0 0 400 400" aria-hidden="true">
+            <defs>
+              <pattern id="ht1" width="7" height="7" patternUnits="userSpaceOnUse">
+                <circle cx="3.5" cy="3.5" r="1.7" fill="#E8B9A5"/>
+              </pattern>
+            </defs>
+            <circle cx="200" cy="200" r="168" fill="none" stroke="#E8B9A5" stroke-width="1" opacity=".45"/>
+            <circle cx="200" cy="200" r="132" fill="#B5472B" opacity=".9"/>
+            <circle cx="200" cy="200" r="132" fill="url(#ht1)" opacity=".55"/>
+            <circle cx="200" cy="200" r="96" fill="#14382F"/>
+            <circle cx="200" cy="200" r="60" fill="none" stroke="#EFE8DB" stroke-width="1.2" opacity=".65"/>
+            <path d="M200 8v384M8 200h384" stroke="#EFE8DB" stroke-width=".8" opacity=".22"/>
+          </svg>
+        </div>
+
+        <div class="hint" data-en="← → slides · C contents · F full screen"
+             data-tr="← → slayt · C içindekiler · F tam ekran"></div>
+        <div class="pg"><b>01</b> — 08</div>
+      </section>
+
+      <!-- ============ 2 ============ -->
+      <section class="slide">
+        <div class="slabel"><i></i><span data-en="At a glance" data-tr="Genel bakış"></span></div>
+        <h2 class="h" data-en="The school in <em>four numbers</em>" data-tr="Okul, dört <em>sayıda</em>"></h2>
+        <p class="sub" data-en="Official figures · 2026—2027" data-tr="Resmî veriler · 2026—2027"></p>
+
+        <div class="n4">
+          <div class="it">
+            <span class="v">580</span>
+            <span class="l" data-en="Students" data-tr="Öğrenci"></span>
+            <span class="n" data-en="About 22 students per classroom (580 ÷ 26)."
+                  data-tr="Derslik başına yaklaşık 22 öğrenci (580 ÷ 26)."></span>
+          </div>
+          <div class="it">
+            <span class="v">43</span>
+            <span class="l" data-en="Teachers" data-tr="Öğretmen"></span>
+            <span class="n" data-en="About 13.5 students per teacher (580 ÷ 43)."
+                  data-tr="Öğretmen başına yaklaşık 13,5 öğrenci (580 ÷ 43)."></span>
+          </div>
+          <div class="it">
+            <span class="v">26</span>
+            <span class="l" data-en="Classrooms" data-tr="Derslik"></span>
+            <span class="n" data-en="Single shift, full-day timetable, five days a week."
+                  data-tr="Tek vardiya, tam gün program; haftada beş gün."></span>
+          </div>
+          <div class="it">
+            <span class="v">3,955</span>
+            <span class="l" data-en="Library books" data-tr="Kütüphane kitabı"></span>
+            <span class="n" data-en="The collection of the campus library."
+                  data-tr="Kampüsteki kütüphanenin koleksiyonu."></span>
+          </div>
+        </div>
+
+        <div class="footq">
+          <b data-en="English is the first foreign language; fibre network across the campus."
+             data-tr="Birinci yabancı dil İngilizce; kampüs genelinde fiber ağ."></b>
+          <span data-en="Day school · no boarding" data-tr="Gündüzlü okul · pansiyon yok"></span>
+        </div>
+
+        <div class="src" data-en="Source · yurhal.meb.k12.tr" data-tr="Kaynak · yurhal.meb.k12.tr"></div>
+        <div class="pg"><b>02</b> — 08</div>
+      </section>
+
+      <!-- ============ 3 ============ -->
+      <section class="slide">
+        <div class="slabel"><i></i><span data-en="Vision &amp; mission" data-tr="Vizyon ve misyon"></span></div>
+        <h2 class="h" data-en="What the school is <em>for</em>" data-tr="Okul ne <em>için</em> var"></h2>
+
+        <div class="vm">
+          <div>
+            <div class="lbl" data-en="Vision" data-tr="Vizyon"></div>
+            <h3 data-en="A school people notice" data-tr="İlgi odağı olan bir okul"></h3>
+            <p data-en="To be a contemporary institution that delivers quality education within the Anatolian high school system — a school where love turns into education, and one that has become a centre of attention through its social, cultural, scientific and sporting activities."
+               data-tr="Sevginin eğitime dönüştüğü bir okul olarak Anadolu liseleri kapsamında kaliteli eğitim veren, gerçekleştirdiği sosyal, kültürel, bilimsel ve sportif faaliyetlerle ilgi odağı hâline gelmiş çağdaş bir eğitim kurumu olmak."></p>
+          </div>
+          <div>
+            <div class="lbl" data-en="Mission" data-tr="Misyon"></div>
+            <h3 data-en="Individuals with direction" data-tr="Yönü olan bireyler"></h3>
+            <p data-en="To raise individuals who work in line with their talents, keep high mental and physical energy, want to improve continuously, have self-confidence and a sense of responsibility, can reach contemporary knowledge, keep up with positive developments in the world, and are useful both to themselves and to the society they live in."
+               data-tr="Öğrencilerimizi yetenekleri doğrultusunda, zihinsel ve fiziksel yüksek enerji düzeyine sahip, sürekli gelişme isteğinde, özgüven sahibi ve sorumluluklarının bilincinde, çağdaş bilgilere ulaşabilen, dünyadaki olumlu gelişmelere ayak uydurabilen bireyler olarak yetiştirmek."></p>
+          </div>
+        </div>
+
+        <div class="qband">
+          <q data-en="“Where education turns into love.”" data-tr="“Eğitimin sevgiye dönüştüğü yer.”"></q>
+          <span data-en="School motto" data-tr="Okulun sloganı"></span>
+        </div>
+
+        <div class="src" data-en="Text · the school’s official vision and mission statement"
+             data-tr="Metin · okulun resmî vizyon ve misyon bildirimi"></div>
+        <div class="pg"><b>03</b> — 08</div>
+      </section>
+
+      <!-- ============ 4 ============ -->
+      <section class="slide">
+        <div class="slabel"><i></i><span data-en="Campus" data-tr="Kampüs"></span></div>
+        <h2 class="h" data-en="Space <em>inventory</em>" data-tr="Mekân <em>envanteri</em>"></h2>
+        <p class="sub" data-en="Nine headings, one campus" data-tr="Dokuz başlık, tek kampüs"></p>
+
+        <div class="inv">
+          <div class="boxx hi"><div class="v">26</div>
+            <div class="l" data-en="Classrooms" data-tr="Derslik"></div></div>
+          <div class="boxx"><div class="v">3</div>
+            <div class="l" data-en="Science laboratories<br>(physics · chemistry · biology)"
+                 data-tr="Fen laboratuvarı<br>(fizik · kimya · biyoloji)"></div></div>
+          <div class="boxx"><div class="v">1</div>
+            <div class="l" data-en="Computer lab" data-tr="Bilgisayar (BT) sınıfı"></div></div>
+          <div class="boxx"><div class="v">1</div>
+            <div class="l" data-en="Art studio" data-tr="Resim sınıfı"></div></div>
+          <div class="boxx gr"><div class="v">3,955</div>
+            <div class="l" data-en="Volumes in the library" data-tr="Kütüphanedeki kitap sayısı"></div></div>
+          <div class="boxx"><div class="v">1</div>
+            <div class="l" data-en="Gymnasium" data-tr="Spor salonu"></div></div>
+          <div class="boxx"><div class="v">2</div>
+            <div class="l" data-en="Multi-purpose halls" data-tr="Çok amaçlı salon"></div></div>
+          <div class="boxx"><div class="v">08:30</div>
+            <div class="l" data-en="Lessons start<br>end at 15:40"
+                 data-tr="Ders başlangıcı<br>bitiş 15.40"></div></div>
+        </div>
+
+        <div class="invnote">
+          <i></i>
+          <span data-en="Figures come from the inventory published by the school. The relative position of the buildings is not shown here; for site layout, please contact the school administration."
+                data-tr="Sayılar okulun yayımladığı envanterden alınmıştır. Binaların birbirine göre konumu burada gösterilmez; yerleşim bilgisi için okul yönetimine başvurulmalıdır."></span>
+        </div>
+
+        <div class="src" data-en="Source · yurhal.meb.k12.tr — About our school"
+             data-tr="Kaynak · yurhal.meb.k12.tr — Okulumuz Hakkında"></div>
+        <div class="pg"><b>04</b> — 08</div>
+      </section>
+
+      <!-- ============ 5 ============ -->
+      <section class="slide">
+        <div class="slabel"><i></i><span data-en="Academic life" data-tr="Akademik yaşam"></span></div>
+        <h2 class="h" data-en="One day, <em>seven hours ten</em>"
+            data-tr="Bir gün, <em>yedi saat on</em>"></h2>
+
+        <div class="day">
+          <div class="t">08:30<small data-en="Lessons begin" data-tr="Dersler başlıyor"></small></div>
+          <div class="dash">—</div>
+          <div class="t">15:40<small data-en="Lessons end" data-tr="Dersler bitiyor"></small></div>
+        </div>
+
+        <div class="ruler">
+          <div class="ln"></div>
+          <div class="tk"></div>
+          <span class="lb l" data-en="Morning" data-tr="Sabah"></span>
+          <span class="lb m" data-en="Midday" data-tr="Öğle"></span>
+          <span class="lb r" data-en="Afternoon" data-tr="Akşam"></span>
+        </div>
+
+        <div class="three">
+          <div class="c">
+            <div class="k" data-en="Single shift, full day" data-tr="Tek vardiya, tam gün"></div>
+            <p data-en="All teaching happens between 08:30 and 15:40 — no split timetable and no afternoon shift."
+               data-tr="Tüm eğitim 08.30—15.40 arasında. İkili öğretim ya da öğleden sonra vardiyası yok."></p>
+          </div>
+          <div class="c">
+            <div class="k" data-en="English first" data-tr="Önce İngilizce"></div>
+            <p data-en="English is the first foreign language across the programme, with a second language also in the curriculum."
+               data-tr="Program genelinde birinci yabancı dil İngilizce; müfredatta ikinci bir yabancı dil de yer alıyor."></p>
+          </div>
+          <div class="c">
+            <div class="k" data-en="Connected rooms" data-tr="Bağlı derslikler"></div>
+            <p data-en="Every teaching room is on the Fatih Project’s fibre network, with interactive boards in use."
+               data-tr="Her derslik Fatih Projesi’nin fiber ağına bağlı; etkileşimli tahtalar derslerde kullanılıyor."></p>
+          </div>
+        </div>
+
+        <div class="src" data-en="Source · yurhal.meb.k12.tr — About our school"
+             data-tr="Kaynak · yurhal.meb.k12.tr — Okulumuz Hakkında"></div>
+        <div class="pg"><b>05</b> — 08</div>
+      </section>
+
+      <!-- ============ 6 ============ -->
+      <section class="slide">
+        <div class="slabel"><i></i><span data-en="Projects &amp; awards" data-tr="Projeler ve ödüller"></span></div>
+        <h2 class="h" data-en="Beyond the <em>timetable</em>" data-tr="Dersin <em>ötesinde</em>"></h2>
+
+        <div class="ledger">
+          <div class="lrow">
+            <div class="y">01</div>
+            <div>
+              <h4>Erasmus+ DigiCoNet</h4>
+              <div class="d" data-en="A European partnership project on digital competences. Its international meeting was held in Romania with the school’s teachers taking part."
+                   data-tr="Dijital yeterlilikler üzerine Avrupa ortaklık projesi. Uluslararası toplantısı, okul öğretmenlerinin katılımıyla Romanya’da gerçekleştirildi."></div>
+            </div>
+            <div class="g" data-en="International partnership" data-tr="Uluslararası ortaklık"></div>
+          </div>
+
+          <div class="lrow">
+            <div class="y">02</div>
+            <div>
+              <h4 data-en="eTwinning quality labels" data-tr="eTwinning kalite ödülleri"></h4>
+              <div class="d" data-en="The school holds both the National and the European Quality Label. A current project, We Heal Our Earth, is run with English teacher Alp Eşber."
+                   data-tr="Okul hem Ulusal hem Avrupa Kalite Ödülü’ne sahip. Güncel projelerden We Heal Our Earth, İngilizce öğretmeni Alp Eşber ile yürütülüyor."></div>
+            </div>
+            <div class="g" data-en="National + European" data-tr="Ulusal + Avrupa"></div>
+          </div>
+
+          <div class="lrow">
+            <div class="y">03</div>
+            <div>
+              <h4>TÜBİTAK 4006</h4>
+              <div class="d" data-en="Student-led research runs under the TÜBİTAK 4006 science fair programme and is presented to a public audience."
+                   data-tr="Öğrenci araştırmaları TÜBİTAK 4006 bilim fuarı programı kapsamında yürütülüyor ve geniş bir izleyiciye sunuluyor."></div>
+            </div>
+            <div class="g" data-en="Science fair" data-tr="Bilim fuarı"></div>
+          </div>
+        </div>
+
+        <div class="src" data-en="Source · the school’s news and announcements"
+             data-tr="Kaynak · okul sitesi haber ve duyuruları"></div>
+        <div class="pg"><b>06</b> — 08</div>
+      </section>
+
+      <!-- ============ 7 ============ -->
+      <section class="slide">
+        <div class="slabel"><i></i><span data-en="Admission · LGS" data-tr="Kabul · LGS"></span></div>
+        <h2 class="h" data-en="Base score, <em>five years</em>" data-tr="Taban puan, <em>beş yıl</em>"></h2>
+
+        <div class="chart">
+          <div class="plot">
+            <svg viewBox="0 0 760 330" role="img" aria-label="LGS base scores 2021-2025">
+              <g stroke="rgba(22,19,15,.12)" stroke-width="1">
+                <line x1="0" y1="20" x2="760" y2="20"/>
+                <line x1="0" y1="95" x2="760" y2="95"/>
+                <line x1="0" y1="170" x2="760" y2="170"/>
+                <line x1="0" y1="245" x2="760" y2="245"/>
+              </g>
+              <g class="axis">
+                <text x="0" y="316">2021</text>
+                <text x="180" y="316">2022</text>
+                <text x="360" y="316">2023</text>
+                <text x="540" y="316">2024</text>
+                <text x="706" y="316">2025</text>
+              </g>
+              <line x1="0" y1="300" x2="760" y2="300" stroke="#16130F" stroke-width="1.2"/>
+              <polyline points="0,240 180,158 360,52 540,121 720,171" fill="none"
+                stroke="#B5472B" stroke-width="2.4"/>
+              <circle cx="0" cy="240" r="6" fill="#F4EEE4" stroke="#16130F" stroke-width="1.8"/>
+              <circle cx="180" cy="158" r="6" fill="#F4EEE4" stroke="#16130F" stroke-width="1.8"/>
+              <circle cx="360" cy="52" r="6" fill="#F4EEE4" stroke="#16130F" stroke-width="1.8"/>
+              <circle cx="540" cy="121" r="6" fill="#F4EEE4" stroke="#16130F" stroke-width="1.8"/>
+              <circle cx="720" cy="171" r="8" fill="#B5472B" stroke="#B5472B"/>
+              <g class="val">
+                <text x="0" y="222">368.896</text>
+                <text x="150" y="140">390.645</text>
+                <text x="330" y="34">419.004</text>
+                <text x="510" y="103">400.538</text>
+                <text x="620" y="152" fill="#B5472B">387.169</text>
+              </g>
+              <g class="yr">
+                <text x="0" y="292" fill="#4A423A">9.53%</text>
+                <text x="168" y="292" fill="#4A423A">11.59%</text>
+                <text x="348" y="292" fill="#4A423A">11.96%</text>
+                <text x="528" y="292" fill="#4A423A">12.74%</text>
+                <text x="676" y="292" fill="#B5472B">12.75%</text>
+              </g>
+            </svg>
+          </div>
+
+          <div class="tbl">
+            <div class="cap" data-en="2025 placement" data-tr="2025 yerleştirme"></div>
+            <div class="lead">387.169</div>
+            <div class="r"><span data-en="Base score" data-tr="Taban puan"></span><b>387.169</b></div>
+            <div class="r"><span data-en="Percentile" data-tr="Yüzdelik dilim"></span><b>12.75%</b></div>
+            <div class="r"><span data-en="Quota" data-tr="Kontenjan"></span><b>150</b></div>
+            <div class="r"><span data-en="Preference code" data-tr="Tercih kodu"></span><b>23494</b></div>
+            <div class="r"><span data-en="Duration" data-tr="Öğrenim süresi"></span>
+              <b data-en="4 years" data-tr="4 yıl"></b></div>
+          </div>
+        </div>
+
+        <div class="disc" data-en="Source: LGS placement data for 2021—2025 as republished by liseler.com.tr. Placement depends on the percentile band, the quota of the year and the order of preferences — these figures are not a prediction."
+             data-tr="Kaynak: liseler.com.tr üzerinden yeniden yayımlanan 2021—2025 LGS yerleştirme verileri. Yerleştirme; yüzdelik dilime, o yılın kontenjanına ve tercih sırasına bağlıdır — bu rakamlar tahmin değildir."></div>
+        <div class="pg"><b>07</b> — 08</div>
+      </section>
+
+      <!-- ============ 8 ============ -->
+      <section class="slide end dark">
+        <div class="inner">
+          <div class="slabel"><i></i><span data-en="Contact &amp; visit" data-tr="İletişim ve ziyaret"></span></div>
+          <h2 data-en="Come and<br><em>see the school.</em>"
+              data-tr="Gelin, okulu<br><em>yerinde görün.</em>"></h2>
+
+          <div class="rows">
+            <div class="r">
+              <div class="k" data-en="Address" data-tr="Adres"></div>
+              <div class="v">Selahattin Eyyübi Mah. 3845 Sk. No: 26
+                <small data-en="Yüreğir / Adana" data-tr="Yüreğir / Adana"></small></div>
+            </div>
+            <div class="r">
+              <div class="k" data-en="Phone" data-tr="Telefon"></div>
+              <div class="v">+90 322 328 93 30
+                <small data-en="Fax +90 322 328 64 40" data-tr="Faks +90 322 328 64 40"></small></div>
+            </div>
+            <div class="r">
+              <div class="k" data-en="E-mail" data-tr="E-posta"></div>
+              <div class="v">964322@meb.k12.tr</div>
+            </div>
+            <div class="r">
+              <div class="k" data-en="Transport" data-tr="Ulaşım"></div>
+              <div class="v" data-en="Buses 110 · 113 · 114" data-tr="Otobüs 110 · 113 · 114"></div>
+              <div></div>
+            </div>
+            <div class="r">
+              <div class="k"></div>
+              <div class="v"><small data-en="Yüreğir–Başkent and Kiremithane minibuses"
+                                      data-tr="Yüreğir–Başkent ve Kiremithane minibüsleri"></small></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div id="qr"></div>
+          <div class="c1" data-en="Scan for the website" data-tr="Site için tara"></div>
+          <div class="c2">yurhal.meb.k12.tr</div>
+        </div>
+
+        <div class="thx" data-en="Thank you — questions welcome."
+             data-tr="Teşekkürler — sorularınızı bekliyoruz."></div>
+        <div class="pg"><b>08</b> — 08</div>
+      </section>
+
+    </div>
+  </div>
+</div>
+
+<!-- ================= ALT ÇUBUK ================= -->
+<div class="tbar" id="tbar">
+  <div class="grp">
+    <button class="nb" id="prev" aria-label="Previous slide">‹</button>
+    <div class="cnt"><b id="cur">1</b> / <span id="tot">8</span></div>
+    <button class="nb" id="next" aria-label="Next slide">›</button>
+  </div>
+
+  <div class="prog"><i id="bar"></i></div>
+
+  <div class="lng" role="group" aria-label="Language">
+    <button data-lang-btn="tr" aria-pressed="false">TR</button>
+    <button data-lang-btn="en" aria-pressed="true">EN</button>
+  </div>
+
+  <button class="tb" id="tocBtn">
+    <span class="ic">☰</span><span class="lbl" data-en="Contents" data-tr="İçindekiler"></span>
+  </button>
+  <button class="tb" id="notesBtn" aria-pressed="false">
+    <span class="ic">✎</span><span class="lbl" data-en="Notes" data-tr="Notlar"></span>
+  </button>
+  <button class="tb" id="fsBtn">
+    <span class="ic">⤢</span><span class="lbl" data-en="Full screen" data-tr="Tam ekran"></span>
+  </button>
+  <button class="tb" onclick="window.print()">
+    <span class="ic">⎙</span><span class="lbl">PDF</span>
+  </button>
+</div>
+
+<div class="scrim" id="scrim"></div>
+
+<div class="panel" id="notes">
+  <div class="nh" data-en="Speaker notes" data-tr="Konuşmacı notları"></div>
+  <div class="nt" id="notesText"></div>
+  <div class="nk" data-en="Press N to hide · ← → to change slide"
+       data-tr="Gizlemek için N · slayt için ← →"></div>
+</div>
+
+<div class="panel" id="toc">
+  <div class="th">
+    <b data-en="Contents" data-tr="İçindekiler"></b>
+    <button id="tocClose" aria-label="Close">×</button>
+  </div>
+  <ol id="tocList"></ol>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" onerror="window.qrFail=true"></script>
+<script>
+(function(){
+  'use strict';
+
+  var lang = 'en';
+  var body = document.body;
+
+  /* ---------------- dil ---------------- */
+  var META = [
+    { en:'Cover', tr:'Kapak',
+      nEn:'Open with the motto. The school is in Yüreğir, Adana; this is the 2026–2027 profile.',
+      nTr:'Sloganla açın. Okul Adana Yüreğir’de; sunum 2026–2027 profili.' },
+    { en:'Four numbers', tr:'Dört rakam',
+      nEn:'580 students, 43 teachers, 26 classrooms — about 22 students per room. Library holds 3,955 volumes.',
+      nTr:'580 öğrenci, 43 öğretmen, 26 derslik — derslik başına yaklaşık 22 öğrenci. Kütüphanede 3.955 kitap.' },
+    { en:'Vision & mission', tr:'Vizyon ve misyon',
+      nEn:'Official wording from the school website. Keep the motto line for the end of the slide.',
+      nTr:'Okul sitesindeki resmî metin. Slogan cümlesini slaytın sonunda vurgulayın.' },
+    { en:'Campus', tr:'Kampüs',
+      nEn:'Nine headings in one inventory. No site plan is shown — invite the audience to ask the administration.',
+      nTr:'Tek envanterde dokuz başlık. Vaziyet planı gösterilmiyor — dinleyiciyi okul yönetimine yönlendirin.' },
+    { en:'School day', tr:'Okul günü',
+      nEn:'Single shift, 08:30–15:40, five days. English is the first foreign language; fibre network throughout.',
+      nTr:'Tek vardiya, 08.30–15.40, beş gün. Birinci yabancı dil İngilizce; kampüste fiber ağ.' },
+    { en:'Projects', tr:'Projeler',
+      nEn:'Three programme lines: Erasmus+ DigiCoNet, eTwinning with two quality labels, TÜBİTAK 4006.',
+      nTr:'Üç program: Erasmus+ DigiCoNet, iki kalite ödüllü eTwinning, TÜBİTAK 4006.' },
+    { en:'Admission', tr:'Kabul',
+      nEn:'2025: base score 387.169, 12.75th percentile, 150 places, preference code 23494. Not a prediction.',
+      nTr:'2025: taban puan 387,169, yüzdelik %12,75, 150 kontenjan, tercih kodu 23494. Tahmin değil.' },
+    { en:'Contact', tr:'İletişim',
+      nEn:'Invite questions. Address, phone, e-mail and the QR code stay on screen.',
+      nTr:'Soruları davet edin. Adres, telefon, e-posta ve QR kod ekranda kalıyor.' }
+  ];
+
+  var nodes = Array.prototype.slice.call(document.querySelectorAll('[data-en]'));
+
+  function setLang(l){
+    lang = l;
+    body.dataset.lang = l;
+    document.documentElement.lang = l;
+    nodes.forEach(function(el){
+      var v = el.getAttribute('data-' + l);
+      if(v !== null) el.innerHTML = v;
+    });
+    Array.prototype.forEach.call(document.querySelectorAll('[data-lang-btn]'), function(b){
+      b.setAttribute('aria-pressed', String(b.dataset.langBtn === l));
+    });
+    renderNotes();
+    renderToc();
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll('[data-lang-btn]'), function(b){
+    b.addEventListener('click', function(){ setLang(b.dataset.langBtn); });
+  });
+
+  /* ---------------- sahne ---------------- */
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var total = slides.length;
+  var idx = 0;
+
+  var deck = document.getElementById('deck');
+  var box  = document.getElementById('box');
+  var tbar = document.getElementById('tbar');
+
+  function fit(){
+    var vw = window.innerWidth;
+    var vh = window.innerHeight;
+    var bh = tbar.offsetHeight || 64;
+    var pad = vw < 700 ? 8 : 34;
+    var s = Math.min((vw - pad) / 1280, (vh - bh - pad) / 720);
+    if(!isFinite(s) || s <= 0) s = 0.1;
+    s = Math.max(0.08, s);
+    box.style.width  = (1280 * s) + 'px';
+    box.style.height = (720 * s) + 'px';
+    deck.style.transform = 'scale(' + s + ')';
+  }
+
+  window.addEventListener('resize', fit);
+  window.addEventListener('orientationchange', function(){ setTimeout(fit, 240); });
+  if(window.visualViewport){
+    window.visualViewport.addEventListener('resize', fit);
+  }
+
+  /* ---------------- gezinme ---------------- */
+  var curEl = document.getElementById('cur');
+  var totEl = document.getElementById('tot');
+  var barEl = document.getElementById('bar');
+  var prevBtn = document.getElementById('prev');
+  var nextBtn = document.getElementById('next');
+  totEl.textContent = total;
+
+  function show(n){
+    if(n < 0) n = 0;
+    if(n > total - 1) n = total - 1;
+    if(n === idx && slides[n].classList.contains('on')) return;
+    slides[idx].classList.remove('on');
+    idx = n;
+    slides[idx].classList.add('on');
+    curEl.textContent = idx + 1;
+    barEl.style.width = ((idx + 1) / total * 100) + '%';
+    prevBtn.disabled = idx === 0;
+    nextBtn.disabled = idx === total - 1;
+    renderNotes();
+    markToc();
+    if(location.hash !== '#s' + (idx + 1)) history.replaceState(null, '', '#s' + (idx + 1));
+  }
+
+  prevBtn.addEventListener('click', function(){ show(idx - 1); });
+  nextBtn.addEventListener('click', function(){ show(idx + 1); });
+
+  /* ---------------- notlar ---------------- */
+  var notesPanel = document.getElementById('notes');
+  var notesText = document.getElementById('notesText');
+  var notesBtn = document.getElementById('notesBtn');
+
+  function renderNotes(){
+    var m = META[idx];
+    if(m) notesText.textContent = lang === 'tr' ? m.nTr : m.nEn;
+  }
+
+  function toggleNotes(force){
+    var open = (force === undefined) ? !notesPanel.classList.contains('open') : force;
+    notesPanel.classList.toggle('open', open);
+    notesBtn.classList.toggle('on', open);
+    notesBtn.setAttribute('aria-pressed', String(open));
+  }
+  notesBtn.addEventListener('click', function(){ toggleNotes(); scrim.classList.remove('open'); });
+
+  /* ---------------- içindekiler ---------------- */
+  var toc = document.getElementById('toc');
+  var scrim = document.getElementById('scrim');
+  var tocList = document.getElementById('tocList');
+
+  function renderToc(){
+    tocList.innerHTML = META.map(function(m, i){
+      return '<li><button data-go="' + i + '"><span class="n">' + (i + 1) + '</span>' +
+             '<span>' + m[lang] + '</span></button></li>';
+    }).join('');
+    markToc();
+  }
+
+  function markToc(){
+    Array.prototype.forEach.call(tocList.querySelectorAll('button'), function(b){
+      b.classList.toggle('cur', Number(b.dataset.go) === idx);
+    });
+  }
+
+  function openToc(force){
+    var open = (force === undefined) ? !toc.classList.contains('open') : force;
+    toc.classList.toggle('open', open);
+    if(open){ toggleNotes(false); scrim.classList.add('open'); markToc(); }
+    else if(!notesPanel.classList.contains('open')){ scrim.classList.remove('open'); }
+  }
+
+  document.getElementById('tocBtn').addEventListener('click', function(){ openToc(); });
+  document.getElementById('tocClose').addEventListener('click', function(){ openToc(false); });
+  scrim.addEventListener('click', function(){
+    openToc(false); toggleNotes(false); scrim.classList.remove('open');
+  });
+
+  tocList.addEventListener('click', function(e){
+    var b = e.target.closest('button[data-go]');
+    if(!b) return;
+    show(Number(b.dataset.go));
+    openToc(false);
+    scrim.classList.remove('open');
+  });
+
+  /* ---------------- tam ekran ---------------- */
+  var fsBtn = document.getElementById('fsBtn');
+  fsBtn.addEventListener('click', function(){
+    if(!document.fullscreenElement){
+      var el = document.documentElement;
+      var fn = el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen;
+      if(fn) fn.call(el);
+    }else{
+      var ex = document.exitFullscreen || document.webkitExitFullscreen;
+      if(ex) ex.call(document);
+    }
+    setTimeout(fit, 350);
+  });
+
+  /* ---------------- klavye ---------------- */
+  document.addEventListener('keydown', function(e){
+    var tag = (e.target.tagName || '').toLowerCase();
+    if(tag === 'input' || tag === 'textarea') return;
+
+    switch(e.key){
+      case 'ArrowRight': case 'PageDown': case ' ':
+        e.preventDefault(); show(idx + 1); break;
+      case 'ArrowLeft': case 'PageUp':
+        e.preventDefault(); show(idx - 1); break;
+      case 'Home': e.preventDefault(); show(0); break;
+      case 'End': e.preventDefault(); show(total - 1); break;
+      case 'n': case 'N': toggleNotes(); scrim.classList.remove('open'); break;
+      case 'c': case 'C': openToc(); break;
+      case 'f': case 'F': fsBtn.click(); break;
+      case 'Escape': openToc(false); toggleNotes(false); scrim.classList.remove('open'); break;
+    }
+  });
+
+  /* ---------------- QR ---------------- */
+  var qrEl = document.getElementById('qr');
+  if(window.QRCode && !window.qrFail){
+    new QRCode(qrEl, {text:'https://yurhal.meb.k12.tr', width:420, height:420,
+      colorDark:'#14382F', colorLight:'#FFFFFF', correctLevel:QRCode.CorrectLevel.M});
+  }else{
+    qrEl.innerHTML = '<div style="width:160px;height:160px;display:grid;place-items:center;' +
+      'font:11px/1.3 Arial;color:#14382F;text-align:center">QR<br>yurhal.meb.k12.tr</div>';
+  }
+
+  /* ---------------- başlat ---------------- */
+  var start = 0;
+  var m = /^#s(\d+)$/.exec(location.hash || '');
+  if(m){ var k = Number(m[1]) - 1; if(k >= 0 && k < total) start = k; }
+
+  slides.forEach(function(s, i){ s.classList.toggle('on', i === start); });
+  idx = start;
+  curEl.textContent = idx + 1;
+  barEl.style.width = ((idx + 1) / total * 100) + '%';
+  prevBtn.disabled = idx === 0;
+  nextBtn.disabled = idx === total - 1;
+
+  setLang('en');
+  fit();
+  if(document.fonts && document.fonts.ready){ document.fonts.ready.then(fit); }
+  setTimeout(fit, 200);
+  setTimeout(fit, 700);
+
+  window.addEventListener('beforeprint', function(){ fit(); });
+  window.addEventListener('afterprint', function(){ fit(); });
+})();
+</script>
+</body>
+</html>
